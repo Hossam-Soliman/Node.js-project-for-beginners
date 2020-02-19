@@ -1,0 +1,139 @@
+
+//Creating Node.js server//
+
+var http = require ('http');
+
+var server = http.createServer(function(req, res){
+
+    console.log('the request is ' + res.url);
+
+    res.writeHead (200, {'content-type': 'text/plain'});
+
+    res.end ('Hey Hossam your first server');
+
+});
+
+server.listen (3000, '127.0.0.1');
+
+console.log('hey baby');
+
+//
+
+
+
+
+//Read Date stream//
+
+var http = require('http');
+var fs = require('fs');
+
+var myReadStream = fs.createReadStream (__dirname + '/readme.txt ,'UTF8');
+
+myReadStream.on('date', function('chunk'){
+    
+    console.log ('new chunk received on buffer');
+    console.log(chunk);
+});
+
+//
+
+
+
+
+//Read date stream then write it to another place (manually)//
+
+var http = require('http');
+var fs = require('fs');
+
+var myReadStream = fs.createReadStream (__dirname + '/readme.txt ,'UTF8');
+
+var myWriteStream = fs.creatWriteStream (__dirname + '/write.txt);
+
+myReadStream.on('date', function('chunk'){    
+    console.log ('new chunk received on buffer');
+    myWriteStream.write(chunk);
+
+});
+
+//
+
+
+//Using Pipes to read and pass data (write it) automaticall//
+
+var http = require('http');
+var fs = require('fs');
+
+var myReadStream = fs.createReadStream (__dirname + '/readme.txt ,'UTF8');
+
+var myWriteStream = fs.creatWriteStream (__dirname + '/write.txt);
+
+myReadStream.pipe(myWriteStream);
+
+//
+
+
+
+
+
+
+
+
+
+//To read data from myReadSteam file and write it to the browser//
+
+
+var http = require ('http');
+var fs = require('fs');
+
+var server = http.createServer(function(req, res){
+
+    res.writeHead (200, {'content-type': 'text/plain'});
+
+    var myReadStream = fs.createReadStream (__dirname + '/readme.txt ,'UTF8');
+
+    myReadStream.pipe(res);
+
+});
+
+server.listen (3000, '127.0.0.1');
+
+console.log('hey baby');
+
+//
+
+
+
+
+
+
+//routing//
+
+
+
+var http = require ('http');
+var fs = require('fs');
+
+var server = http.createServer(function(req, res){
+
+    if (req.url === '/home' || req.url ==='/'){
+
+        res.writeHead (200, {'content-type': 'text/html'});
+        fs.createReadStream(__dirname + '/index.html').pipe(res);
+
+    }else if (req.url === '/contact'){
+
+        res.writeHead (200, {'content-type': 'text/html'});
+        fs.createReadStream(__dirname + '/contact.html').pipe(res);
+
+    }else{
+
+        res.writeHead (200, {'content-type': 'text/html'});
+        fs.createReadStream(__dirname + '/404.html').pipe(res);
+    }
+});
+
+server.listen (3000, '127.0.0.1');
+
+console.log('hey baby');
+
+//
